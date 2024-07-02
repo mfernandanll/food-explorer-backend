@@ -1,15 +1,17 @@
-require('express-async-errors')
-
-const AppError = require('./utils/AppError')
+require('express-async-errors');
+const database = require('./database/sqlite');
+const AppError = require('./utils/AppError');
 
 const express = require('express');
 
-const routes = require('./routes')
+const routes = require('./routes');
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
 
-app.use(routes)
+app.use(routes);
+
+database();
 
 app.use((error, request, response, next) => {
   if (error instanceof AppError) { 
@@ -25,7 +27,7 @@ app.use((error, request, response, next) => {
     status: 'error',
     message: 'Internal server error'
   })
-})
+});
 
 const PORT = 3333;
 app.listen(PORT, () => console.log(`The project is running on port:${PORT}`));
