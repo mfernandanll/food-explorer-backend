@@ -62,7 +62,7 @@ class DishesController {
       category: category ?? dish.category,
       price: price ?? dish.price,
       image: image ?? dish.image,
-      updated_at: new Date().toISOString(),
+      updated_at: knex.fn.now(),
       updated_by: dish.created_by
     };
   
